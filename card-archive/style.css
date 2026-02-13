@@ -1,0 +1,292 @@
+/* ── Reset & Base ─────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --felt: #0b6623;
+  --felt-dark: #064a19;
+  --gold: #d4a843;
+  --card-w: 180px;
+  --card-h: 260px;
+  --card-radius: 14px;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #f0e6d3;
+  background: #0a0a12;
+}
+
+/* ── Felt background ──────────────────────────────── */
+.felt-bg {
+  position: fixed; inset: 0; z-index: -2;
+  background:
+    radial-gradient(ellipse at 50% 40%, #0d7a2b 0%, #064a19 50%, #032010 100%);
+}
+.felt-bg::after {
+  content: '';
+  position: fixed; inset: 0; z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* ── Header ───────────────────────────────────────── */
+header {
+  text-align: center;
+  padding: 40px 20px 10px;
+  position: relative; z-index: 2;
+}
+.title {
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-shadow:
+    0 0 20px rgba(212,168,67,0.4),
+    0 2px 4px rgba(0,0,0,0.6);
+}
+.subtitle {
+  margin-top: 8px;
+  font-size: 1.05rem;
+  color: rgba(240,230,211,0.6);
+  letter-spacing: 2px;
+}
+
+/* ── Table scene (3D container) ───────────────────── */
+.table-scene {
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px 20px;
+  position: relative; z-index: 2;
+}
+
+.deck {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  max-width: 1100px;
+  transform-style: preserve-3d;
+}
+
+/* ── Individual card ──────────────────────────────── */
+.card-container {
+  width: var(--card-w);
+  height: var(--card-h);
+  perspective: 900px;
+  cursor: pointer;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card-container:hover .card {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Card back (visible by default) ───────────────── */
+.card-back {
+  background:
+    repeating-conic-gradient(#1a1a6e 0% 25%, #12124e 0% 50%) 0 0 / 20px 20px,
+    linear-gradient(135deg, #1a1a6e, #12124e);
+  border: 3px solid #d4a843;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.5),
+    inset 0 0 60px rgba(212,168,67,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-back::before {
+  content: '';
+  width: 80%;
+  height: 80%;
+  border: 2px solid rgba(212,168,67,0.4);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%);
+}
+.card-back::after {
+  content: '\2660';
+  position: absolute;
+  font-size: 3rem;
+  color: rgba(212,168,67,0.25);
+}
+
+/* ── Card front (revealed on hover) ───────────────── */
+.card-front {
+  transform: rotateY(180deg);
+  background: #faf6eb;
+  border: 3px solid #ccc;
+  box-shadow:
+    0 8px 32px rgba(0,0,0,0.4),
+    inset 0 0 40px rgba(0,0,0,0.03);
+  color: #1a1a2e;
+  padding: 14px;
+  justify-content: space-between;
+}
+
+/* Rank + suit corners */
+.card-corner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+.card-corner.bottom {
+  align-self: flex-end;
+  transform: rotate(180deg);
+}
+.card-rank {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.card-suit-small {
+  font-size: 1.2rem;
+}
+
+/* Center area */
+.card-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  gap: 8px;
+}
+.card-game-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.card-big-suit {
+  font-size: 2.6rem;
+  opacity: 0.15;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.card-desc {
+  font-size: 0.82rem;
+  color: #666;
+  font-style: italic;
+  max-width: 140px;
+}
+.card-play-hint {
+  font-size: 0.72rem;
+  color: #999;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 4px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.card-container:hover .card-play-hint {
+  opacity: 1;
+}
+
+/* ── Card entrance & shuffle animations ───────────── */
+.card-container {
+  opacity: 0;
+  animation: dealIn 0.5s ease forwards;
+}
+@keyframes dealIn {
+  from {
+    opacity: 0;
+    transform: translateY(-200px) rotateZ(40deg) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateZ(0deg) scale(1);
+  }
+}
+
+/* Shuffle animation class */
+.card-container.shuffling {
+  animation: shuffleCard 0.6s ease;
+}
+@keyframes shuffleCard {
+  0%   { transform: translateY(0) rotateZ(0) scale(1); }
+  25%  { transform: translateY(-80px) rotateZ(-15deg) scale(0.9); }
+  50%  { transform: translateY(-40px) rotateZ(10deg) scale(0.95) translateX(30px); }
+  75%  { transform: translateY(-60px) rotateZ(-5deg) scale(0.92) translateX(-20px); }
+  100% { transform: translateY(0) rotateZ(0) scale(1); }
+}
+
+/* 3D tilt on mouse move (applied via JS) */
+.card-container.tilt {
+  transition: transform 0.1s ease-out;
+}
+
+/* ── Shuffle button ───────────────────────────────── */
+.shuffle-btn-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  position: relative; z-index: 2;
+}
+.shuffle-btn {
+  font-family: inherit;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(0,0,0,0.35);
+  border: 2px solid var(--gold);
+  border-radius: 50px;
+  padding: 14px 48px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+.shuffle-btn:hover {
+  background: var(--gold);
+  color: #0a0a12;
+  box-shadow: 0 0 30px rgba(212,168,67,0.4);
+}
+.shuffle-btn:active {
+  transform: scale(0.95);
+}
+
+/* ── Particle canvas ──────────────────────────────── */
+#particles {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 700px) {
+  :root {
+    --card-w: 140px;
+    --card-h: 200px;
+  }
+  .deck { gap: 16px; }
+  .card-game-name { font-size: 1.05rem; }
+  .card-rank { font-size: 1.2rem; }
+}

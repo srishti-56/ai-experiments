@@ -1,0 +1,212 @@
+/* ── Shared game page styles ──────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --accent: #d4a843;
+  --bg: #0a0a12;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  color: #f0e6d3;
+  background: var(--bg);
+  overflow-x: hidden;
+}
+
+/* Felt background */
+.felt-bg {
+  position: fixed; inset: 0; z-index: -1;
+  background:
+    radial-gradient(ellipse at 50% 30%, #0d7a2b 0%, #064a19 50%, #032010 100%);
+}
+.felt-bg::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1' height='1' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Back button */
+.back-btn {
+  position: fixed;
+  top: 24px; left: 24px;
+  z-index: 100;
+  font-family: inherit;
+  font-size: 0.95rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--accent);
+  background: rgba(0,0,0,0.4);
+  border: 2px solid var(--accent);
+  border-radius: 50px;
+  padding: 10px 28px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+.back-btn:hover {
+  background: var(--accent);
+  color: #0a0a12;
+  box-shadow: 0 0 25px rgba(212,168,67,0.4);
+}
+
+/* Hero section */
+.game-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 80px 20px 40px;
+  text-align: center;
+}
+
+.hero-card {
+  width: 200px;
+  height: 290px;
+  background: #faf6eb;
+  border-radius: 16px;
+  border: 3px solid #ccc;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.5),
+    0 0 80px rgba(212,168,67,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #1a1a2e;
+  margin-bottom: 30px;
+  animation: floatCard 3s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card .big-suit {
+  font-size: 5rem;
+  opacity: 0.1;
+  position: absolute;
+}
+.hero-card .game-rank {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.hero-card .game-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0) rotateZ(-2deg); }
+  50%      { transform: translateY(-15px) rotateZ(2deg); }
+}
+
+.game-title {
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 20px rgba(212,168,67,0.4), 0 2px 4px rgba(0,0,0,0.6);
+}
+
+.game-tagline {
+  margin-top: 10px;
+  font-size: 1.15rem;
+  color: rgba(240,230,211,0.6);
+  font-style: italic;
+  letter-spacing: 1px;
+}
+
+/* Content sections */
+.game-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(212,168,67,0.3);
+}
+
+.section p,
+.section li {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: rgba(240,230,211,0.85);
+}
+
+.section ul {
+  list-style: none;
+  padding: 0;
+}
+.section ul li {
+  padding: 6px 0;
+  padding-left: 24px;
+  position: relative;
+}
+.section ul li::before {
+  content: '♠';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* Info grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-top: 12px;
+}
+.info-card {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(212,168,67,0.2);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+.info-card .label {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(240,230,211,0.5);
+  margin-bottom: 6px;
+}
+.info-card .value {
+  font-size: 1.3rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* Placeholder content box */
+.placeholder-box {
+  background: rgba(0,0,0,0.25);
+  border: 2px dashed rgba(212,168,67,0.3);
+  border-radius: 12px;
+  padding: 40px 24px;
+  text-align: center;
+  color: rgba(240,230,211,0.5);
+  font-size: 1rem;
+  letter-spacing: 1px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero-card { width: 150px; height: 220px; }
+  .game-content { padding: 24px 16px 60px; }
+}

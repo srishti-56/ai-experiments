@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Card Game Archive</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="felt-bg"></div>
+
+  <header>
+    <h1 class="title">Card Game Archive</h1>
+    <p class="subtitle">Hover a card to peek &mdash; Click to explore</p>
+  </header>
+
+  <div class="table-scene">
+    <div class="deck" id="deck"></div>
+  </div>
+
+  <div class="shuffle-btn-wrap">
+    <button id="shuffleBtn" class="shuffle-btn">Shuffle</button>
+  </div>
+
+  <canvas id="particles"></canvas>
+
+  <script src="cards.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
